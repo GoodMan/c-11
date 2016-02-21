@@ -192,22 +192,22 @@ void specialMembers( const std::string& name1, const std::string& name2, const s
     std::cout << "  Before\n";
     t2.name( name2 );
     t3.name( name3 );
-    std::cout << "    t2.name()=(" << t2.name() << ")\n";
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
+    std::cout << "    t2.name()=(" << t2.name() << ")\n";
     t3 = t2; //	copy
     std::cout << "  After\n";
-    std::cout << "    t2.name()=(" << t2.name() << ")\n";
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
+    std::cout << "    t2.name()=(" << t2.name() << ")\n";
 
     std::cout << "\nmove assign operator\n";
     t3.name( name3 );
     std::cout << "  Before\n";
-    std::cout << "    t2.name()=(" << t2.name() << ")\n";
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
-    t3 = std::move( t1 );//T(); // move if move assign operator exists, otherwise copy
+    std::cout << "    t2.name()=(" << t2.name() << ")\n";
+    t3 = std::move( t2 );//T(); // move if move assign operator exists, otherwise copy
     std::cout << "  After\n";
-    std::cout << "    t2.name()=(" << t2.name() << ")\n";
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
+    std::cout << "    t2.name()=(" << t2.name() << ")\n";
 
     std::cout << typeid( T ).name() << " End\n\n";
 }
