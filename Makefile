@@ -7,7 +7,7 @@ LDFLAGS=
 	$(CXX) $(CPPFLAGS) $(USERFLAGS) -o $@ -c $<
 
 
-USERFLAGS=
+USERFLAGS=-fconstexpr-depth=2000000
 USERFLAGS+=-DCHAP1
 
 OBJ=$(subst .cpp,.o,$(SRC))
