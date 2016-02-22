@@ -79,8 +79,8 @@ int main( int argc, char* argv[] )
     BHSClock clock;
 
     //	Rember!!!
-    //	If you call only gaussConstExpr without taking return value,
-    //	then it will not be constexprt and it takes more time than non-constexpr function
+    //	If you call only gaussConstExpr without taking return value with constexpr qualifier,
+    //	then it will not be constexpr and it takes more time than non-constexpr function
     //
     //		gaussConstExpr( 50000 );	            //	it won't be constexprt
     //		uint32_t r1 = gaussConstExpr( 50000 );	//	it won't be constexprt
