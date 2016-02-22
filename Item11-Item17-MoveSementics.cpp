@@ -102,8 +102,9 @@ class DerivedNotCallingBaseMove : public Base
         //	but, don't call move ctor for base class
         //	and omit a member variable
         DerivedNotCallingBaseMove( DerivedNotCallingBaseMove&& other )
-            : id_( std::move( other.id_ ) ), name_( std::move( other.name_ ) )
+            : id_( std::move( other.id_ ) )
         {
+        	//	compiler calls ctor for Base class as we don't call mctor for base class
         }
 
         //
