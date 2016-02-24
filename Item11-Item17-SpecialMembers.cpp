@@ -50,13 +50,13 @@ class OnlyCCtor
         std::string name_;
 
     public:
-        //	When we define either of copy ctor, move ctor or move operator,
-        //	compiler doesn't creat default ctor
+        //  When we define either of copy ctor, move ctor or move operator,
+        //  compiler doesn't creat default ctor
         OnlyCCtor()
         {
         }
 
-        //	copy ctor
+        //  copy ctor
         OnlyCCtor( const OnlyCCtor& other )
             : name_( other.name_ )
         {
@@ -108,16 +108,16 @@ class OnlyMCtor
         std::string name_;
 
     public:
-        //	When we define either of copy ctor, move ctor or move operator,
-        //	compiler doesn't creat default ctor
+        //  When we define either of copy ctor, move ctor or move operator,
+        //  compiler doesn't creat default ctor
         OnlyMCtor()
         {
         }
 
-        //	Compiler doesn't create
-        //		copy ctor
-        //		copy assign operator
-        //		move opertor
+        //  Compiler doesn't create
+        //      copy ctor
+        //      copy assign operator
+        //      move opertor
         OnlyMCtor( OnlyMCtor&& other )
             : name_( std::move( other.name_ ) )
         {
@@ -142,14 +142,14 @@ class OnlyMoveAssignOperator
         std::string name_;
 
     public:
-        //	When we define either of copy ctor, move ctor or move operator,
-        //	compiler doesn't creat default ctor
+        //  When we define either of copy ctor, move ctor or move operator,
+        //  compiler doesn't creat default ctor
         OnlyMoveAssignOperator()
         {
         }
 
     public:
-        //	Compiler doesn't create move ctor
+        //  Compiler doesn't create move ctor
         OnlyMoveAssignOperator& operator=( OnlyMoveAssignOperator&& other )
         {
             name_ = std::move( other.name_ );
@@ -157,6 +157,56 @@ class OnlyMoveAssignOperator
         };
 
     public:
+        void name( const std::string& name )
+        {
+            name_ = name;
+        }
+
+        const std::string& name()
+        {
+            return name_;
+        }
+};
+
+
+class DeleteCCtor
+{
+    private:
+        std::string name_;
+
+    public:
+        //  When we define either of copy ctor, move ctor or move operator,
+        //  compiler doesn't creat default ctor
+        DeleteCCtor()
+        {
+        }
+
+        //  copy ctor is deleted so that compiler doesn't creat move ctor
+        DeleteCCtor( const DeleteCCtor& other ) = delete;
+
+    public:
+
+        void name( const std::string& name )
+        {
+            name_ = name;
+        }
+
+        const std::string& name()
+        {
+            return name_;
+        }
+};
+
+
+class DeleteAssignOperator
+{
+    private:
+        std::string name_;
+
+    public:
+        //  copy assign operator is deleted.  So does move assign operator
+        DeleteAssignOperator& operator=( const DeleteAssignOperator& rhs ) = delete;
+
         void name( const std::string& name )
         {
             name_ = name;
@@ -194,7 +244,7 @@ void specialMembers( const std::string& name1, const std::string& name2, const s
     t3.name( name3 );
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
     std::cout << "    t2.name()=(" << t2.name() << ")\n";
-    t3 = t2; //	copy
+    t3 = t2; // copy
     std::cout << "  After\n";
     std::cout << "    t3.name()=(" << t3.name() << ")\n";
     std::cout << "    t2.name()=(" << t2.name() << ")\n";
@@ -217,11 +267,12 @@ int main( int argc, char* argv[] )
 {
     specialMembers< Empty >( "empty1", "empty2", "empty3" );
 
-    //	C++98 compatible
+    //  C++98 compatible
     specialMembers< OnlyDtor >( "OnlyDtor1", "OnlyDtor2", "OnlyDtor3" );
     specialMembers< OnlyCCtor >( "OnlyCCtor1", "OnlyCCtor2", "OnlyCCtor3" );
-    specialMembers< OnlyCopyAssignOperator >( "OnlyCpyAssignOperator1", "OnlyCpyAssignOperator2", "OnlyCpyAssignOperato3" );
-    //	C++11
+    specialMembers< OnlyCopyAssignOperator >( "OnlyCpyAssignOperator1", "OnlyCpyAssignOperator2",
+            "OnlyCpyAssignOperato3" );
+    //  C++11
 #if 1
     //specialMembers< OnlyMCtor >( "OnlyMCtor" );
 #else
@@ -241,6 +292,10 @@ int main( int argc, char* argv[] )
     t2 = t3;
     t3 = OnlyMoveAssignOperator();
 #endif
+
+    specialMembers< DeleteCCtor >( "DeleteCtor1", "DeleteCtor2", "DeleteCtor3" );
+    specialMembers< DeleteAssignOperator >( "DeleteAssignOperator1", "DeleteAssignOperator2",
+                                            "DeleteAssignOperator3" );
 
     return 0;
 }
