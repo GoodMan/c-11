@@ -86,7 +86,7 @@ Widget& Widget::operator=( const Widget& rhs )
     {
         //	Widget: copy ctor
         Widget temp( rhs );
-		//	std::swap
+        //	std::swap
         //	-> Widget: move ctor
         //	-> Widget: move operator
         //	-> Widget: move operator
@@ -108,14 +108,13 @@ Widget& Widget::operator=( Widget&& rhs )
         std::cout << " -> Widget: move operator\n";
     }
 
-    //	call base class' move assign operator if any
+    //	call base class' move assign operator if it's a derived class
     //	Base::operator=( rhs )
     //	then move member variables
     this->id_ = std::move( rhs.id_ );
-    //rhs.id_ = -1;	//	invalidate
     name_ = std::move( rhs.name_ );
     // 	don't use std::swap for move assign operator
-	//	see comments in copy assign operator
+    //	see comments in copy assign operator
 
     return *this;
 }
