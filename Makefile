@@ -13,7 +13,9 @@ USERFLAGS+=-DCHAP1
 OBJ=$(subst .cpp,.o,$(SRC))
 TARGET=$(subst .cpp,,$(SRC))
 
-OBJS=Widget.o
+OBJS=
+OBJS+=Widget.o
+OBJS+=BHSTimeUtil.o
 OBJS+=$(OBJ)
 
 $(TARGET): $(OBJS)

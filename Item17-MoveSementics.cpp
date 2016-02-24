@@ -1,8 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
 //  allen@matrix:~/Study/c++11$ g++ --version
 //  g++ (Debian 5.3.1-8) 5.3.1 20160205
 //  Copyright (C) 2015 Free Software Foundation, Inc.
 //  This is free software; see the source for copying conditions.  There is NO
 //  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+////////////////////////////////////////////////////////////////////////////////
+
+//#include "Widget.h"
 
 #include <utility>
 #include <iostream>
@@ -10,8 +14,11 @@
 #include <typeinfo>
 #include <sstream>
 
+////////////////////////////////////////////////////////////////////////////////
+
 namespace
 {
+
 void nameIt( std::string& name, int id )
 {
     std::ostringstream ostrm;
@@ -104,7 +111,7 @@ class DerivedNotCallingBaseMove : public Base
         DerivedNotCallingBaseMove( DerivedNotCallingBaseMove&& other )
             : id_( std::move( other.id_ ) )
         {
-        	//	compiler calls ctor for Base class as we don't call mctor for base class
+        	//	compiler calls default ctor for Base class as we don't call mctor for base class
         }
 
         //
@@ -148,9 +155,25 @@ void testMoveCtor()
     //	compiler didn't complain about absence of copy ctor unless it is called
 	//T t4( t2 );
 	//t4.whoami();
+#if 0
+    std::cout << "testMoveCtor End: " << typeid( T ).name() << '\n';
 
+    std::cout << "--------------------\n";
+    T t3;
+    std::cout << typeid( T ).name() << " t3 = std::move( t2 ) )\n";
+    std::cout << "t3 Before -----------\n";
+    t3.whoami();
+    std::cout << "t2 Before -----------\n";
+    t2.whoami();
+    t3 = std::move( t2 );
+    std::cout << "t3 After ------------\n";
+    t3.whoami();
+    std::cout << "What happened to t2?\n";
+    t2.whoami();
+#endif
     std::cout << "testMoveCtor End: " << typeid( T ).name() << '\n';
 }
+
 
 int main( int argc, char* argv[] )
 {
@@ -161,6 +184,9 @@ int main( int argc, char* argv[] )
     testMoveCtor< Derived >();
 
     testMoveCtor< DerivedNotCallingBaseMove >();
+    //testMoveCtor< Widget >();
 
     return 0;
 }
+
+////////////////////////////////////////////////////////////////////////////////

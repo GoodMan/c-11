@@ -1,9 +1,10 @@
+#include "BHSTimeUtil.h"
+
 #include <iostream>
-#include <iomanip>
-#include <chrono>
 
 namespace
 {
+
 constexpr uint32_t gaussConstExpr( const uint32_t num )
 {
     return ( num == 0 ? 0 : num + gaussConstExpr( num - 1 ) );
@@ -14,50 +15,7 @@ uint32_t gauss( const uint32_t num )
     return ( num == 0 ? 0 : num + gauss( num - 1 ) );
 }
 
-}
-
-class BHSClock
-{
-    private:
-        std::chrono::steady_clock::time_point start;
-        std::chrono::steady_clock::time_point end;
-
-    public:
-        void on()
-        {
-            start = std::chrono::steady_clock::now();
-        }
-
-        void off()
-        {
-            end = std::chrono::steady_clock::now();
-        }
-
-        std::ostream& report( std::ostream& os ) const
-        {
-            std::chrono::duration< double > timeSpanInSecs
-                = std::chrono::duration_cast< std::chrono::duration< double > >( end - start );
-
-            std::chrono::milliseconds timeSpanInMilliSecs
-                = std::chrono::duration_cast< std::chrono::milliseconds >( end - start );
-            std::chrono::microseconds timeSpanInMicroSecs
-                = std::chrono::duration_cast< std::chrono::microseconds >( end - start );
-            std::chrono::nanoseconds timeSpanInNanoSecs
-                = std::chrono::duration_cast< std::chrono::nanoseconds >( end - start );
-
-            return os << "Elapsed time : " << timeSpanInSecs.count()      << " seconds.\n"
-                   << "               " << timeSpanInMilliSecs.count() << " m secs.\n"
-                   << "               " << timeSpanInMicroSecs.count() << " u secs.\n"
-                   << "               " << timeSpanInNanoSecs.count()  << " n secs.\n"
-                   ;
-        }
-};
-
-std::ostream& operator<<( std::ostream& os, const BHSClock& clock )
-{
-    return clock.report( os );
-}
-
+}	//	anoymous namesapce
 
 int main( int argc, char* argv[] )
 {
@@ -76,14 +34,14 @@ int main( int argc, char* argv[] )
     //	               6025 u secs.
     //	               6025876 n secs.
 
-    BHSClock clock;
+    BHSTimeUtil::BHSClock clock;
 
     //	Rember!!!
     //	If you call only gaussConstExpr without taking return value with constexpr qualifier,
     //	then it will not be constexpr and it takes more time than non-constexpr function
     //
-    //		gaussConstExpr( 50000 );	            //	it won't be constexprt
-    //		uint32_t r1 = gaussConstExpr( 50000 );	//	it won't be constexprt
+    //		gaussConstExpr( 50000 );	            //	it won't be constexpr
+    //		uint32_t r1 = gaussConstExpr( 50000 );	//	it won't be constexpr
     //
     clock.on();
     constexpr uint32_t r1 = gaussConstExpr( 50000 );

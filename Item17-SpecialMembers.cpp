@@ -1,7 +1,18 @@
+//  allen@matrix:~/Study/c++11$ g++ --version
+//  g++ (Debian 5.3.1-8) 5.3.1 20160205
+//  Copyright (C) 2015 Free Software Foundation, Inc.
+//  This is free software; see the source for copying conditions.  There is NO
+//  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Widget.h"
+
 #include <iostream>
 #include <string>
 #include <typeinfo>
 #include <utility>
+
+////////////////////////////////////////////////////////////////////////////////
 
 class Empty
 {
@@ -292,10 +303,13 @@ int main( int argc, char* argv[] )
     t2 = t3;
     t3 = OnlyMoveAssignOperator();
 #endif
-
+    specialMembers< Widget >( "Widget1", "Widget2", "Widget3" );
+#if 0
     specialMembers< DeleteCCtor >( "DeleteCtor1", "DeleteCtor2", "DeleteCtor3" );
     specialMembers< DeleteAssignOperator >( "DeleteAssignOperator1", "DeleteAssignOperator2",
                                             "DeleteAssignOperator3" );
-
+#endif
     return 0;
 }
+
+////////////////////////////////////////////////////////////////////////////////
